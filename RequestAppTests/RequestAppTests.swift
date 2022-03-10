@@ -12,16 +12,12 @@ class RequestAppTests: XCTestCase {
 
     func testMoviesServiceMock() async {
         let serviceMock = MoviesServiceMock()
-        do {
-            let failingResult = try await serviceMock.getMovieDetail(id: 0)
-            
-            switch failingResult {
-            case .success(let movie):
-                XCTAssertEqual(movie.originalTitle, "Mad Max: Fury Road")
-            case .failure:
-                XCTFail("The request should not fail")
-            }
-        } catch {
+        let failingResult = await serviceMock.getMovieDetail(id: 0)
+        
+        switch failingResult {
+        case .success(let movie):
+            XCTAssertEqual(movie.originalTitle, "Mad Max: Fury Road")
+        case .failure:
             XCTFail("The request should not fail")
         }
     }
@@ -43,11 +39,11 @@ class RequestAppTests: XCTestCase {
 }
 
 final class MoviesServiceMock: Mockable, MoviesServiceable {
-    func getTopRated() async throws -> Result<TopRated, RequestError> {
+    func getTopRated() async -> Result<TopRated, RequestError> {
         return .success(loadJSON(filename: "top_rated_response", type: TopRated.self))
     }
 
-    func getMovieDetail(id: Int) async throws -> Result<Movie, RequestError> {
+    func getMovieDetail(id: Int) async -> Result<Movie, RequestError> {
         return .success(loadJSON(filename: "movie_response", type: Movie.self))
     }
 }

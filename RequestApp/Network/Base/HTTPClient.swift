@@ -8,14 +8,14 @@
 import Foundation
 
 protocol HTTPClient {
-    func sendRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> Result<T, RequestError>
+    func sendRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async -> Result<T, RequestError>
 }
 
 extension HTTPClient {
     func sendRequest<T: Decodable>(
         endpoint: Endpoint,
         responseModel: T.Type
-    ) async throws -> Result<T, RequestError> {
+    ) async -> Result<T, RequestError> {
         guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
             return .failure(.invalidURL)
         }

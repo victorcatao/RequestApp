@@ -44,7 +44,7 @@ final class MainViewController: UIViewController {
     
     private func fetchData(completion: @escaping (Result<TopRated, RequestError>) -> Void) {
         Task(priority: .background) {
-            let result = try await service.getTopRated()
+            let result = await service.getTopRated()
             completion(result)
         }
     }
@@ -78,7 +78,7 @@ final class MainViewController: UIViewController {
     
     private func showDetail(`for` movie: Movie) {
         Task(priority: .background) {
-            let result = try await service.getMovieDetail(id: movie.id)
+            let result = await service.getMovieDetail(id: movie.id)
             switch result {
             case .success(let movieResponse):
                 showModal(
