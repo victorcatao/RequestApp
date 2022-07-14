@@ -14,9 +14,9 @@ extension MoviesEndpoint: Endpoint {
     var path: String {
         switch self {
         case .topRated:
-            return "movie/top_rated"
+            return "/3/movie/top_rated"
         case .movieDetail(let id):
-            return "movie/\(id)"
+            return "/3/movie/\(id)"
         }
     }
 

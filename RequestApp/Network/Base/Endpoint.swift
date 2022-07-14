@@ -6,7 +6,8 @@
 //
 
 protocol Endpoint {
-    var baseURL: String { get }
+    var scheme: String { get }
+    var host: String { get }
     var path: String { get }
     var method: RequestMethod { get }
     var header: [String: String]? { get }
@@ -14,7 +15,11 @@ protocol Endpoint {
 }
 
 extension Endpoint {
-    var baseURL: String {
-        return "https://api.themoviedb.org/3/"
+    var scheme: String {
+        return "https"
+    }
+
+    var host: String {
+        return "api.themoviedb.org"
     }
 }

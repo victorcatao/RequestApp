@@ -15,8 +15,13 @@ extension HTTPClient {
     func sendRequest<T: Decodable>(
         endpoint: Endpoint,
         responseModel: T.Type
-    ) async -> Result<T, RequestError> {
-        guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
+    ) async -> Result<T, RequestError> { 
+        var urlComponents = URLComponents()
+        urlComponents.scheme = endpoint.scheme
+        urlComponents.host = endpoint.host
+        urlComponents.path = endpoint.path
+        
+        guard let url = urlComponents.url else {
             return .failure(.invalidURL)
         }
         
